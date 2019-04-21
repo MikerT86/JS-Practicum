@@ -7,7 +7,7 @@ let btnStart        = document.getElementById('start'),
     income          = document.getElementsByClassName('income-value'),
     monthsavings    = document.getElementsByClassName('monthsavings-value'),
     yearsavings     = document.getElementsByClassName('yearsavings-value'),
-    expensesInput   = document.getElementsByClassName('.expenses-item'),
+    expensesInput   = document.getElementsByClassName('expenses-item'),
     optExpensesInput        = document.querySelectorAll('.optionalexpenses-item'),
     buttonConfirmExpensen       = document.getElementsByTagName('button')[0],
     buttonConfirmOptExpensen    = document.getElementsByTagName('button')[1],
@@ -18,6 +18,4 @@ let btnStart        = document.getElementById('start'),
     percentIncome   = document.querySelector('[for="percent"]'),
     timeDateClass   = document.querySelector('.time-date');
 
-
-console.log(percentIncome);
 
