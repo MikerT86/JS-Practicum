@@ -79,4 +79,63 @@ window.addEventListener('DOMContentLoaded', function() {
     }
 
     setClock('time', deadLine);
+
+    //Modal window
+    let more = document.querySelector('.more'),
+        overlay = document.querySelector('.overlay'),
+        close = document.querySelector('.popup-close'),
+        btn = document.querySelectorAll('.description-btn');
+
+    more.addEventListener('click', function() {
+        overlay.style.display = 'block';
+        this.classList.add('more-splash');
+        document.body.style.overflow = 'hidden';
+    });
+
+    close.addEventListener('click', function() {
+        overlay.style.display = 'none';
+        more.classList.remove('more-splash');
+        document.body.style.overflow = '';     
+    });
+
+    btn.forEach(function(item) {
+        item.addEventListener('click', function() {
+            overlay.style.display = 'block';
+            this.classList.add('more-splash');
+            document.body.style.overflow = 'hidden';
+        });
+    });
+    
 });
+
+class Options {
+
+    constructor(height, width, bg, fontSize, textAlign) {
+        this.height = height; 
+        this.width = width;
+        this.bg = bg;
+        this.fontSize = fontSize; 
+        this.textAlign = textAlign;
+    }
+
+    createDiv() {
+
+        let newDiv = document.createElement('div'); 
+
+        // newDiv.classList.add('cssText');
+
+        newDiv.style.cssText = `height: ${this.height}px; \
+                                width: ${this.width}px; \
+                                frontSize: ${this.fontSize}; \
+                                text-align: ${this.textAlign}; \
+                                background-color: ${this.bg};`;
+
+        newDiv.textContent = "Hello yoga!"; 
+
+        document.body.appendChild(newDiv);
+    }  
+}
+
+let newObj = new Options(100, 100, 'green', 12, 'center'); 
+
+newObj.createDiv();
