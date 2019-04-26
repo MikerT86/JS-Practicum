@@ -105,37 +105,96 @@ window.addEventListener('DOMContentLoaded', function() {
             document.body.style.overflow = 'hidden';
         });
     });
+
+    //Form
+
+    let message = {
+        loading: "Loading...",
+        success: 'Thank you! We contact you later!',
+        failure: 'Something went wrong!'
+    };
     
-});
+    let form = document.querySelector('.main-form'),
+        contactForm = document.getElementById('form'),
+        input = document.getElementsByTagName('input'),
+        statusMessage = document.createElement('div');
 
-class Options {
+        statusMessage.classList.add('status');
+    
+    function sendDataServer(event) {
+        event.preventDefault();
+        this.appendChild(statusMessage);
 
-    constructor(height, width, bg, fontSize, textAlign) {
-        this.height = height; 
-        this.width = width;
-        this.bg = bg;
-        this.fontSize = fontSize; 
-        this.textAlign = textAlign;
+        let request = new XMLHttpRequest();
+
+        request.open('POST', 'server.php');
+        request.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
+
+        let data = {};
+        if (this.id == 'form') {
+            data['mail'] = this[0].value;
+            data['tel'] = this[1].value;      
+        } else {
+            let formData = new FormData(this);
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+        }
+
+        let json = JSON.stringify(data);
+
+        request.send(json);
+
+        request.addEventListener('readystatechange', function() {
+
+            if (request.readyState < 4) {
+                statusMessage.innerHTML = message.loading;
+            } else if (request.readyState === 4 && request.status == 200) {
+                statusMessage.innerHTML = message.success;                    
+            } else {
+                statusMessage.innerHTML = message.failure;
+            }
+            
+        });
+
+        for (let i = 0; i < input.length; i++) {
+            input[i].value = '';   
+        }
+
     }
 
-    createDiv() {
+    form.addEventListener('submit', sendDataServer);
+    contactForm.addEventListener('submit', sendDataServer);
 
-        let newDiv = document.createElement('div'); 
+});
 
-        // newDiv.classList.add('cssText');
+// class Options {
 
-        newDiv.style.cssText = `height: ${this.height}px; \
-                                width: ${this.width}px; \
-                                frontSize: ${this.fontSize}; \
-                                text-align: ${this.textAlign}; \
-                                background-color: ${this.bg};`;
+//     constructor(height, width, bg, fontSize, textAlign) {
+//         this.height = height; 
+//         this.width = width;
+//         this.bg = bg;
+//         this.fontSize = fontSize; 
+//         this.textAlign = textAlign;
+//     }
 
-        newDiv.textContent = "Hello yoga!"; 
+//     createDiv() {
 
-        document.body.appendChild(newDiv);
-    }  
-}
+//         let newDiv = document.createElement('div'); 
 
-let newObj = new Options(100, 100, 'green', 12, 'center'); 
+//         // newDiv.classList.add('cssText');
 
-newObj.createDiv();
+//         newDiv.style.cssText = `height: ${this.height}px; \
+//                                 width: ${this.width}px; \
+//                                 front-size: ${this.fontSize}; \
+//                                 text-align: ${this.textAlign}; \
+//                                 background-color: ${this.bg};`;
+
+//         newDiv.textContent = "Hello yoga!"; 
+//         document.body.appendChild(newDiv);
+//     }  
+// }
+
+// let newObj = new Options(100, 100, 'green', 12, 'center'); 
+
+// newObj.createDiv();
